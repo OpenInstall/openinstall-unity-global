@@ -1,6 +1,5 @@
 # openinstall-unity-global
  方便 unity 集成使用 openinstall global
- **正在开发中...**
 	
 ## 导入 openinstallglobal.unitypackage
 右击 `Assets` ，选择 `Import Package` 中的 `Custom Package...`    
@@ -20,8 +19,6 @@
 ![获取appkey和scheme](https://res.cdn.openinstall.io/doc/ios-appkey.png)
 
 ### iOS 平台
-
-无需写一句Object-C代码，只需进行如下配置  
 
 _备注_：  
 - 如果用户使用了 `IMPL_APP_CONTROLLER_SUBCLASS` 宏生成自己的 `customAppController`文件（或其它自定义名称）,请在该文件中添加一键拉起的回调方法，并删除掉 `Assets/Plugins/iOS/libs` 中的 `CustomAppController.mm` 文件；  
@@ -47,21 +44,9 @@ _备注_：
 - 选择 `Capabilities` 标签
 - 打开 `Associated Domains` 开关
 - 添加 openinstall 官网后台中应用对应的关联域名
-![设置 ulink](https://res.cdn.openinstall.io/doc/ios-ulink-3.png)
+![设置 ulink](https://web.cdn.openinstallcloud.com/doc/assciationDev.png)
 
-**以下配置为可选项**  
-openinstall可兼容微信openSDK1.8.6以上版本的通用链接跳转功能，注意微信SDK初始化方法中，传入正确格式的universal link链接：  
-
-``` objc
-//your_wxAppID从微信后台获取，yourAppkey从openinstall后台获取
-[WXApi registerApp:@"your_wxAppID" universalLink:@"https://yourAppkey.openinstall.io/ulink/"];
-```
-
-微信开放平台后台Universal links配置，要和上面代码中的保持一致  
-
-![微信后台配置](https://res.cdn.openinstall.io/doc/ios-wx-ulink.jpg)
-
-- 微信SDK更新参考[微信开放平台更新文档](https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Access_Guide/iOS.html)  
+![添加associatedDomains](https://web.cdn.openinstallcloud.com/doc/ios-associated-domains.png)
 
 
 #### scheme 配置
@@ -91,7 +76,7 @@ openinstall可兼容微信openSDK1.8.6以上版本的通用链接跳转功能，
 
 #### 自定义配置
 - 如果项目已存在自己的 `AndroidManifest.xml` 文件，根据下图标注的内容做相应的更改  
-![修改AndroidManifest](https://res.cdn.openinstall.io/doc/unity-manifest.png)
+![修改AndroidManifest](https://web.cdn.openinstallcloud.com/doc/unity-manifest.jpg)
 
 - 如果需要使用自己的拉起 `Activity` ，可参考 `sample/Android/src` 目录中的 `OgUnityActivity.java` 在拉起 `Activity` 的 `onCreate(Bundle savedInstanceState)` 和 `onNewIntent(Intent intent)` 中添加拉起处理代码
 
@@ -111,7 +96,6 @@ void Start () {
 }
 ```
 ### 1 初始化
-确保用户同意《隐私政策》之后，再初始化 openinstall。参考 [应用合规指南](https://www.openinstall.io/doc/rules.html)
 ```
 openinstall.Init();
 ```
@@ -147,9 +131,6 @@ public void getInstallFinish(OpenInstallData installData)
 			+ "，是否需要重试=" + installData.shouldRetry);
 }
 ```
-_备注_：  
-- 注意这个安装参数尽量不要自己保存，在每次需要用到的时候调用该方法去获取，因为如果获取成功sdk会保存在本地  
-- 该方法可重复获取参数，如需只要在首次安装时获取，可设置标记，详细说明可参考openinstall官网的常见问题
 
 ### 4 渠道统计（高级版功能）
 
@@ -162,7 +143,7 @@ openinstall.ReportRegister();
 ```
 #### 4.2 效果点上报
 统计终端用户对某些特殊业务的使用效果，如充值金额，分享次数等等。  
-请在 [openinstall 控制台](https://developer.openinstall.io/) 的 “效果点管理” 中添加对应的效果点  
+请在 [openinstall 控制台](https://developer.openinstallglobal.com/) 的 “效果点管理” 中添加对应的效果点  
 ![创建效果点](https://res.cdn.openinstall.io/doc/effect_point.png)  
 调用接口进行效果点的上报，第一个参数对应控制台中的 **效果点ID**  
 ``` c
@@ -170,7 +151,7 @@ openinstall.ReportEffectPoint("effect_test", 1);
 ```
 
 #### 4.3 效果点明细统计
-请在 [openinstall 控制台](https://developer.openinstall.io/) 的 “效果点管理” 中添加对应的效果点，并启用“记录明细”，添加自定义参数  
+请在 [openinstall 控制台](https://developer.openinstallglobal.com/) 的 “效果点管理” 中添加对应的效果点，并启用“记录明细”，添加自定义参数  
 ``` c
 Dictionary<string,string> extraDict = new Dictionary<string, string>();
 extraDict.Add("k1", "v1");
